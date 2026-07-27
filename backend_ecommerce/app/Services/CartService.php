@@ -7,7 +7,7 @@ use App\Models\Product;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\ValidationException;
 
-class cartService
+class CartService
 {
     public function getAll()
     {
@@ -20,8 +20,8 @@ class cartService
     public function store(array $data): Cart
     {
         $product = Product::findOrFail($data['product_id']);
-
-        $cart = Cart::where('user_id', Auth::id())
+        $cart = Cart::query()
+            ->where('user_id', Auth::id())
             ->where('product_id', $product->id)
             ->first();
         
@@ -53,5 +53,27 @@ class cartService
         }
         
         return $cart->load('product.category');
+    }
+
+    public function update(Cart $cart, array $data): Cart
+    {
+        if ($cart->user_id != Auth::id()) {
+            abort(403, 'Unauthorized.');
+        }
+
+        $cart->update([
+            'quantity' => $data['quantity'],
+        ]);
+
+        return $cart->load('product');
+    }
+
+    public function delete(Cart $cart)
+    {
+        if ($cart->user_id != Auth::id()) {
+            abort(403, 'Unauthorized.');
+        }
+
+        $cart->delete();
     }
 }

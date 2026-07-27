@@ -27,7 +27,9 @@ Route::prefix('products')->group(function () {
 });
 
 Route::get('/categories', [CategoryController::class, 'index']);
-Route::middleware('auth:sanctum')->group(function () {
-    Route::get('/cart', [CartController::class, 'index']);
-    Route::post('/cart', [CartController::class, 'store']);
+Route::middleware('auth:sanctum')->prefix('cart')->group(function () {
+    Route::get('/', [CartController::class, 'index']);
+    Route::post('/', [CartController::class, 'store']);
+    Route::patch('/{cart}', [CartController::class, 'update']);
+    Route::delete('/{cart}', [CartController::class, 'destroy']);
 });

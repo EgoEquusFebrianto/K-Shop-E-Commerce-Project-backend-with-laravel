@@ -5,7 +5,6 @@ import { useShop } from "../../context/shop/hook/shop-hook";
 
 export const Shop = () => {
   const { products } = useShop();
-  console.log(products);
   
   return (
     <div className="shop">

@@ -34,9 +34,9 @@ export const UserMenu = () => {
             document.removeEventListener("keydown", handleEscape);
         }
     }, [])
-    console.log(user);
     
     const avatarUrl = user?.avatar ? user['avatar'] : DEFAULT_AVATAR;
+    console.log(user);
     
     return (
         <div className='user-menu' ref={menuRef}>

@@ -1,6 +1,6 @@
 import React from 'react'
-import API from '../api/api'
-import { TokenStorage } from '../util/token-storage';
+import API from '../../api/api'
+import { TokenStorage } from '../../../utils/auth/token-storage';
 
 const AuthService = {
     login: async (email, password) => {
@@ -10,8 +10,8 @@ const AuthService = {
         });
 
         // simpan data ke localStorage
-        const {accessToken, user} = response.data;
-        TokenStorage.save(accessToken, user);
+        const {token, user} = response.data;
+        TokenStorage.save(token, user);
 
         return response.data
     },

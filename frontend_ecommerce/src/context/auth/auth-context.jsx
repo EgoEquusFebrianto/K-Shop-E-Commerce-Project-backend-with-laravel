@@ -1,7 +1,7 @@
 import React, { createContext, useCallback, useEffect, useState } from 'react'
 import AuthService from './service/auth-service';
-import { TokenStorage } from './util/token-storage';
-import { isTokenExpired } from './util/jwt-util';
+import { TokenStorage } from '../../utils/auth/token-storage';
+import { isTokenExpired } from '../../utils/auth/jwt-util';
 
 export const AuthContext = createContext(null);
 

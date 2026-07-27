@@ -1,12 +1,15 @@
-import React, { useContext } from "react";
+import React from "react";
 import { ShopContext } from "../../context/shop/shop-context";
 import { CartItem } from "./cart-item";
 import { useNavigate } from "react-router-dom";
-
 import "./cart.css";
+import { useCart } from "../../context/cart-shop/hook/cart-hook";
+import { useShop } from "../../context/shop/hook/shop-hook";
+
 export const Cart = () => {
-  const { cartItems, getTotalCartAmount, checkout, products } = useContext(ShopContext);
-  const totalAmount = getTotalCartAmount();
+  const { products } = useShop();
+  const { cartItems, getTotalCartAmount, checkout } = useCart();
+  const totalAmount = getTotalCartAmount(products);
 
   const navigate = useNavigate();
   console.log(cartItems);
@@ -18,8 +21,8 @@ export const Cart = () => {
       </div>
       <div className="cart">
         {products.map((product) => {
-          if (cartItems[product.id] !== 0) {
-            return <CartItem data={product} />;
+          if (cartItems[product.id]) {
+            return <CartItem key={product.id} data={product} />;
           }
         })}
       </div>

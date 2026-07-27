@@ -1,12 +1,13 @@
 import React from "react";
-import { useShop } from "../../context/shop/hook/shop-hook";
+import { useCart } from "../../context/cart-shop/hook/cart-hook";
+import { TokenStorage } from "../../utils/auth/token-storage";
 
 export const Product = (props) => {
   const { id, name, price, image_url } = props.data;
-  const { addToCart, cartItems } = useShop();
+  const { addToCart, cartItems } = useCart();
 
-  const cartItemCount = cartItems[id];
-
+  const cartItemCount = cartItems[id]?.quantity;
+  
   return (
     <div className="product">
       <img src={image_url} />
