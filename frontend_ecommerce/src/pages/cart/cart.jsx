@@ -13,7 +13,22 @@ export const Cart = () => {
 
   const navigate = useNavigate();
   console.log(cartItems);
-  
+
+  const handleCheckout = async () => {
+
+      if (!isAuthenticated) {
+          showLoginRequiredToast();
+          return;
+      }
+
+      try {
+          await checkout();
+          navigate("/orders");
+      } catch (err) {
+          console.error(err);
+      }
+  };
+
   return (
     <div className="cart">
       <div>
@@ -32,10 +47,7 @@ export const Cart = () => {
           <p> Subtotal: ${totalAmount} </p>
           <button onClick={() => navigate("/")}> Continue Shopping </button>
           <button
-            onClick={() => {
-              checkout();
-              navigate("/checkout");
-            }}
+            onClick={handleCheckout}
           >
             {" "}
             Checkout{" "}

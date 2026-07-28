@@ -1,11 +1,14 @@
 import React, { createContext, useEffect, useRef, useState } from 'react'
 import { useAuth } from "../auth/hooks/auth-hook"
 import CartService from './service/cart-service';
+import OrderService from '../order/order-service';
+import { useOrder } from '../order/order-hook';
 
 export const CartContext = createContext(null);
 
 export const CartContextProvider = ({children}) => {
     const { isAuthenticated } = useAuth();
+    const { fetchDataOrder } = useOrder();
     const [cartItems, setCartItems] = useState({});
     const debounceRefs = useRef({});
     const cartItemsRef = useRef({});
@@ -271,8 +274,10 @@ export const CartContextProvider = ({children}) => {
         scheduleSync(productId);
     };
 
-    const checkout = () => {
-        setCartItems({});
+    const checkout = async () => {
+        await OrderService.checkout();
+        setCartItems({})
+        await fetchDataOrder();
     };
 
     const getTotalCartAmount = (products) => {

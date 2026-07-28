@@ -71,6 +71,9 @@ export const UserMenu = () => {
                             <Link to="/settings" className='dropdown-item' onClick={closeMenu}>
                                 Settings
                             </Link>
+                            <Link to="/orders" className='dropdown-item' onClick={closeMenu}>
+                                Orders
+                            </Link>
                             <button className='dropdown-item logout' onClick={
                                 () => {
                                     logout();

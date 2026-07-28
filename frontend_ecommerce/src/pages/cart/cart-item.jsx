@@ -24,6 +24,23 @@ export const CartItem = (props) => {
     )
   }, [cartItems, id]);
 
+  const handleAdd = () => {
+    if (!isAuthenticated) {
+        showLoginRequiredToast();
+        return;
+    }
+
+    addToCart(id);
+  };
+
+  const handleRemove = () => {
+      if (!isAuthenticated) {
+          showLoginRequiredToast();
+          return;
+      }
+
+      removeFromCart(id);
+  };
   return (
     <div className="cartItem">
       <img src={image_url} />
@@ -33,7 +50,7 @@ export const CartItem = (props) => {
         </p>
         <p> Price: ${price}</p>
         <div className="countHandler">
-          <button onClick={() => removeFromCart(id)}> - </button>
+          <button onClick={handleRemove}> - </button>
           <input
             // value={cartItems[id]?.quantity ?? 0}
             // onChange={(e) => updateCartItemCount(Number(e.target.value), id)}
@@ -41,7 +58,7 @@ export const CartItem = (props) => {
             onChange={(e) => setInputvalue(e.target.value)}
             onBlur={handlerBlur}
           />
-          <button onClick={() => addToCart(id)}> + </button>
+          <button onClick={handleAdd}> + </button>
         </div>
       </div>
     </div>

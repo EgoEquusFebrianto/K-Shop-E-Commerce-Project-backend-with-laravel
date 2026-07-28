@@ -6,6 +6,8 @@ import { Contact } from "./pages/contact";
 import { Cart } from "./pages/cart/cart";
 import { Testing } from "./Testing";
 import { LoginPage } from "./pages/login/LoginPage";
+import { Orders } from "./pages/order/Orders";
+import { Toaster } from "react-hot-toast";
 
 function AppContent() {
   const location = useLocation();
@@ -20,6 +22,7 @@ function AppContent() {
         <Route path="/cart" element={<Cart />} />
         <Route path="/login" element={<LoginPage state={false} />} />
         <Route path="/register" element={<LoginPage state={true} />} />
+        <Route path="/orders" element={<Orders />} />
       </Routes>
     </div>
   );
@@ -28,6 +31,7 @@ function AppContent() {
 function App() {
   return (
     <Router>
+      <Toaster position="bottom-right" reverseOrder={false} />
       <AppContent />
     </Router>
   );

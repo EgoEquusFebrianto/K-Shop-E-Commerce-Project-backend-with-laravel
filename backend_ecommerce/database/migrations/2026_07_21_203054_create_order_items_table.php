@@ -20,10 +20,10 @@ return new class extends Migration
             $table->foreignId('product_id')
                 ->constrained('products')
                 ->cascadeOnUpdate()
-                ->cascadeOnDelete();
+                ->restrictOnDelete();
             $table->string('product_name', 200);
             $table->decimal('price', 15, 2);
-            $table->integer('quantity');
+            $table->unsignedInteger('quantity');
             $table->decimal('subtotal', 15, 2);
             $table->timestamps();
         });

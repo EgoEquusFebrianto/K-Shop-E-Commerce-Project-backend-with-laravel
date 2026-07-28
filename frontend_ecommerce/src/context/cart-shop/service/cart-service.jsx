@@ -22,11 +22,17 @@ const CartService = {
             quantity,
         })
 
-        return (await response).data.data;
+        return await response.data.data;
     },
 
     delete: async (cartId) => {
         await API.delete(`/cart/${cartId}`);
+    },
+
+    checkout: async () => {
+        const response = await API.post("/orders")
+
+        return response.data.data;
     },
 }
 
