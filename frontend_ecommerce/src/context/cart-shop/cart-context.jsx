@@ -20,6 +20,7 @@ export const CartContextProvider = ({children}) => {
                     cartId: item.id,
                     quantity: item.quantity,
                     pending: false,
+                    previousQuantity: item.quantity,
                 };
             });
 
@@ -76,6 +77,31 @@ export const CartContextProvider = ({children}) => {
         cartItemsRef.current = cartItems;
     }, [cartItems]);
 
+
+    const rollbackCartItem = (productId) => {
+        setCartItems((prev) => {
+            const current = prev[productId];
+            if (!current) return;
+
+            // Rollback Post
+            if (current.cartId === null) {
+                const copy = {...prev};
+                delete copy[productId];
+                return copy;
+            }
+
+            // Rollback Patch / Delete
+            return {
+                ...prev,
+                [productId]: {
+                    ...current,
+                    quantity: current.previousQuantity,
+                    pending: false,
+                }
+            };
+        });
+    };
+    
     const syncCart = async (productId) => {
         const item = cartItemsRef.current[productId];
 
@@ -103,6 +129,7 @@ export const CartContextProvider = ({children}) => {
                         cartId: cart.id,
                         quantity: cart.quantity,
                         pending: false,
+                        previousQuantity: cart.quantity,
                     },
                 }));
                 return;
@@ -118,11 +145,13 @@ export const CartContextProvider = ({children}) => {
                 ...prev,
                 [productId]:{
                     ...prev[productId],
-                    pending:false
+                    pending:false,
+                    previousQuantity: prev[productId].quantity,
                 }
             }))
 
         } catch (err) {
+            rollbackCartItem(productId);
             console.error(err);
         }
     };
@@ -148,6 +177,7 @@ export const CartContextProvider = ({children}) => {
                         cartId: null,
                         quantity: 1,
                         pending: true,
+                        previousQuantity: 1
                     },
                 };
             }
@@ -158,6 +188,9 @@ export const CartContextProvider = ({children}) => {
                     ...current,
                     quantity: current.quantity + 1,
                     pending: true,
+                    previousQuantity: current.pending
+                        ? current.previousQuantity
+                        : current.quantity,
                 },
             };
         });
@@ -180,6 +213,9 @@ export const CartContextProvider = ({children}) => {
                         ...current,
                         quantity: 0,
                         pending: true,
+                        previousQuantity: current.pending
+                            ? current.previousQuantity
+                            : current.quantity,
                     },
                 };
             }
@@ -190,6 +226,9 @@ export const CartContextProvider = ({children}) => {
                     ...current,
                     quantity,
                     pending: true,
+                    previousQuantity: current.pending
+                        ? current.previousQuantity
+                        : current.quantity,
                 },
             };
         });
@@ -209,6 +248,9 @@ export const CartContextProvider = ({children}) => {
                         ...current,
                         quantity: 0,
                         pending: true,
+                        previousQuantity: current.pending
+                            ? current.previousQuantity
+                            : current.quantity,
                     },
                 };
             }
@@ -219,6 +261,9 @@ export const CartContextProvider = ({children}) => {
                     ...current,
                     quantity,
                     pending: true,
+                    previousQuantity: current.pending
+                        ? current.previousQuantity
+                        : current.quantity,
                 },
             };
         });
