@@ -5,11 +5,13 @@ import { useNavigate } from "react-router-dom";
 import "./cart.css";
 import { useCart } from "../../context/cart-shop/hook/cart-hook";
 import { useShop } from "../../context/shop/hook/shop-hook";
+import { useAuth } from "../../context/auth/hooks/auth-hook";
 
 export const Cart = () => {
   const { products } = useShop();
   const { cartItems, getTotalCartAmount, checkout } = useCart();
   const totalAmount = getTotalCartAmount(products);
+  const { isAuthenticated } = useAuth();
 
   const navigate = useNavigate();
   console.log(cartItems);

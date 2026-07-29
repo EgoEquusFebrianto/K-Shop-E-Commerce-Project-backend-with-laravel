@@ -24,6 +24,14 @@ class OrderService
         return $orders;
     }
 
+    public function delete(Order $order) {
+        if ($order->user_id != Auth::user()->id) {
+            abort(401, 'Unauthorized');
+        }
+
+        $order->delete();
+    }
+
     public function checkout()
     {
         /**

@@ -1,11 +1,15 @@
 import React from 'react'
 import { useOrder } from '../../context/order/order-hook';
-import { OrderItems } from '../../context/order/order-items';
+import { OrderItems } from './order-items';
 import './orders.css'
 
 export const Orders = () => {
-    const {orders } = useOrder();
+    const { orders, deleteOrder } = useOrder();
     console.log(orders);
+
+    const handleCancelOrder = async (id) => {
+        await deleteOrder(id);
+    };
 
     return (
         <div className="orders">
@@ -29,7 +33,7 @@ export const Orders = () => {
                                 <p>Total : ${order.total_amount}</p>
                             </div>
 
-                            <button>
+                            <button onClick={() => handleCancelOrder(order.id)}>
                                 Cancel Order
                             </button>
 

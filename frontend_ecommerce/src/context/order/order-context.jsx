@@ -19,9 +19,19 @@ export const OrderContextProvider = (props) => {
         }
     };
 
+    const deleteOrder = async (id) => {
+        try {
+            await OrderService.delete(id);
+            setOrders((prev) => prev.filter(order => order.id !== id));
+        } catch (err) {
+            console.error(err);
+        }
+    }; 
+
     const contextValue = {
         orders,
         fetchDataOrder,
+        deleteOrder,
     };
 
     return (

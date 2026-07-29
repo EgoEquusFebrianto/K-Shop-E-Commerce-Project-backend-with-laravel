@@ -37,4 +37,5 @@ Route::middleware('auth:sanctum')->prefix('cart')->group(function () {
 Route::middleware('auth:sanctum')->prefix('orders')->group(function () {
     Route::get('/', [OrderController::class, 'index']);
     Route::post('/', [OrderController::class, 'checkout']);
+    Route::delete('/{order}', [OrderController::class, 'destroy']);
 });
