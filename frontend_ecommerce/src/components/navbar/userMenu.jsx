@@ -3,7 +3,7 @@ import { useAuth } from '../../context/auth/hooks/auth-hook';
 import './userMenu.css'
 import { Link } from 'react-router-dom';
 
-const DEFAULT_AVATAR = "http://localhost:8000/storage/profile/default/customer1.jpg";
+// const DEFAULT_AVATAR = "http://localhost:8000/storage/profile/default/customer1.jpg";
 
 export const UserMenu = () => {
     const { user, isAuthenticated, logout } = useAuth();
@@ -35,7 +35,7 @@ export const UserMenu = () => {
         }
     }, [])
     
-    const avatarUrl = user?.avatar ? user['avatar'] : DEFAULT_AVATAR;
+    const avatarUrl = user?.avatar;
     console.log(user);
     
     return (
@@ -45,9 +45,9 @@ export const UserMenu = () => {
                     src={avatarUrl} 
                     alt={user?.fullname || "Guest"}
                     className='user-avatar'
-                    onError={(e) => {
-                        e.target.src = DEFAULT_AVATAR
-                    }}
+                    // onError={(e) => {
+                    //     e.target.src=DEFAULT_AVATAR;
+                    // }}
                 />
             </button>
 

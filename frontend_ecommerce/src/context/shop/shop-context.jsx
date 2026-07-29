@@ -1,7 +1,7 @@
 import { createContext, useEffect, useState } from "react";
 import axios from "axios";
 import { loadProductCached, saveProducts, isProductCachedExpired } from "../../utils/cache/product-cache"
-
+import { ShopService } from "./service/shop-service";
 
 export const ShopContext = createContext(null);
 
@@ -11,8 +11,8 @@ export const ShopContextProvider = (props) => {
 
   const fetchProducts = async () => {
     try {
-      const response = await axios.get("http://localhost:8000/api/products");
-      const products = response.data['data'];
+      const payload = await ShopService.getAll();
+      const products = payload['data'];
 
       setProducts(products);
       saveProducts(products);

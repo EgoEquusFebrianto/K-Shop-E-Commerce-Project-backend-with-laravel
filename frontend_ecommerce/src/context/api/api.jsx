@@ -2,7 +2,7 @@ import axios from "axios";
 import { TokenStorage } from "../../utils/auth/token-storage";
 
 const API = axios.create({
-    baseURL: "http://localhost:8000/api",
+    baseURL: import.meta.env.VITE_API_URL,
     timeout: 10000,
     headers: {
         "Content-Type": "application/json",
