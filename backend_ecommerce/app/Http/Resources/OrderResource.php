@@ -4,6 +4,7 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Support\Facades\Storage;
 
 class OrderResource extends JsonResource
 {
@@ -31,7 +32,7 @@ class OrderResource extends JsonResource
                     'product' => [
                         'id' => $item->product->id,
                         'name' => $item->product->name,
-                        'image_url' => "http://localhost:8000/storage/{$item->product->storage_path}",
+                        'image_url' => url(Storage::url($item->product->storage_path)),
                     ],
                 ];
             }),

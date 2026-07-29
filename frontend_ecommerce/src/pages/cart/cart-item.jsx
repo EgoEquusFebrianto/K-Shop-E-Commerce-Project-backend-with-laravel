@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import { ShopContext } from "../../context/shop/shop-context";
 import { useCart } from "../../context/cart-shop/hook/cart-hook";
+import { useAuth } from "../../context/auth/hooks/auth-hook";
 
 export const CartItem = (props) => {
   const { id, name, price, image_url } = props.data;
@@ -8,6 +9,7 @@ export const CartItem = (props) => {
   const [inputValue, setInputvalue] = useState(
     cartItems[id]?.quantity.toString() ?? ""
   );
+  const { isAuthenticated } = useAuth();
 
   const handlerBlur = () => {
     if (inputValue.trim() === "") {
