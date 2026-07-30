@@ -1,2 +1,4 @@
 ## Project
 ---
+
+![Demo](assets/demo.gif)
