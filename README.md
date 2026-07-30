@@ -351,7 +351,7 @@ Endpoint autentikasi pengguna yang akan menghasilkan token akses setelah proses 
 
 **Screenshot**
 
-> *Letakkan Screenshot Postman Login di sini.*
+![Login Postman](assets/auth-login.png)
 
 ---
 
@@ -361,7 +361,7 @@ Endpoint untuk mengambil seluruh daftar produk yang akan ditampilkan pada halama
 
 **Screenshot**
 
-> *Letakkan Screenshot Postman Products di sini.*
+![Product Postman](assets/products.png)
 
 ---
 
@@ -371,7 +371,7 @@ Endpoint untuk menambahkan, memperbarui, mengambil, dan menghapus produk pada ke
 
 **Screenshot**
 
-> *Letakkan Screenshot Postman Cart di sini.*
+![cart Postman](assets/cart.png)
 
 ---
 
@@ -381,4 +381,53 @@ Endpoint untuk membuat pesanan baru serta mengambil riwayat transaksi yang dimil
 
 **Screenshot**
 
-> *Letakkan Screenshot Postman Order di sini.*
+![Order Postman](assets/order.png)
+
+## Pengembangan di Masa Depan
+
+Meskipun aplikasi K-Shop E-Commerce telah mengimplementasikan fitur-fitur utama sebuah platform e-commerce, masih terdapat beberapa pengembangan yang dapat dilakukan untuk meningkatkan fungsionalitas, keamanan, maupun pengalaman pengguna. Beberapa pengembangan yang direncanakan antara lain:
+
+* Implementasi sistem pembayaran (*payment gateway*) sehingga proses checkout dapat dilakukan secara langsung.
+* Penambahan fitur pencarian (*search*), filter, dan pengurutan (*sorting*) produk.
+* Implementasi sistem ulasan (*review*) dan penilaian (*rating*) produk oleh pengguna.
+* Pengembangan dashboard administrator untuk mengelola produk, kategori, pesanan, dan pengguna.
+* Integrasi layanan pengiriman (*shipping service*) beserta perhitungan ongkos kirim.
+* Penambahan notifikasi transaksi melalui email.
+* Optimasi performa menggunakan mekanisme *caching* pada sisi backend maupun frontend.
+* Peningkatan keamanan aplikasi, seperti pembatasan percobaan login (*rate limiting*) dan autentikasi dua faktor (*Two-Factor Authentication*).
+* Penyusunan *pipeline* CI/CD untuk mengotomatisasi proses pengujian dan deployment aplikasi.
+* Migrasi aplikasi ke lingkungan berbasis Docker agar proses deployment menjadi lebih mudah dan konsisten.
+
+## Acknowledgements
+
+Proyek ini dikembangkan dengan memanfaatkan berbagai teknologi, pustaka (*library*), serta referensi dari komunitas *open source*. Penulis mengucapkan terima kasih kepada seluruh pengembang dan kontributor yang telah menyediakan dokumentasi, referensi, maupun sumber daya yang sangat membantu selama proses pengembangan aplikasi ini.
+
+Dalam proses pengembangan, beberapa bagian antarmuka pengguna diadaptasi dari proyek *open source* sebagai referensi awal, kemudian dimodifikasi, disesuaikan, dan dikembangkan lebih lanjut agar memenuhi kebutuhan serta karakteristik aplikasi K-Shop E-Commerce.
+
+Referensi yang digunakan antara lain:
+
+* **machadop1407** — *Shopping Cart React*
+  [Repository](https://github.com/machadop1407/shopping-cart-react.git).
+  Digunakan sebagai referensi awal untuk desain antarmuka dan struktur dasar halaman frontend e-commerce.
+
+* **Deepak12159** — *Projects*
+  [Repository](https://github.com/Deepak12159/Projects.git).
+  Digunakan sebagai referensi awal untuk desain antarmuka halaman autentikasi (*Login* dan *Register*), yang kemudian dimodifikasi dan diintegrasikan dengan sistem autentikasi Laravel pada proyek ini.
+
+Seluruh proses pengembangan backend, perancangan REST API, struktur basis data, integrasi frontend–backend, sistem autentikasi, fitur keranjang belanja, pemrosesan pesanan, deployment, serta penyempurnaan antarmuka pengguna merupakan hasil pengembangan dan implementasi pada proyek K-Shop E-Commerce.
+
+## Author
+
+**Febrianto Kudadiri**
+
+Mahasiswa Teknik Informatika yang memiliki minat pada bidang **Backend Development**, **Data Engineering**, dan **Distributed Systems**. Proyek ini dikembangkan sebagai bagian dari portofolio pembelajaran dalam membangun aplikasi web *full-stack* menggunakan Laravel dan React.
+
+* GitHub: https://github.com/EgoEquusFebrianto
+* Email: febrianto.kudadiri.04@gmail.com
+* LinkedIn: [Febrianto Kudadri](https://www.linkedin.com/in/febrianto-kudadiri-9098a2254/)
+
+## License
+
+Proyek ini dirilis di bawah **MIT License**.
+
+Silakan menggunakan, mempelajari, memodifikasi, maupun mengembangkan proyek ini sesuai dengan ketentuan yang tercantum pada berkas `LICENSE`.
