@@ -46,6 +46,7 @@
 
 .user-info {
     display: flex;
+    color: white;
     flex-direction: column;
     gap: 4px;
     margin-bottom: 10px;
