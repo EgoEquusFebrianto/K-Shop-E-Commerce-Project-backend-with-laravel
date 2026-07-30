@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import SocialIcons from '../../components/auth-form/SocialIcons'
 import { useNavigate } from 'react-router-dom';
+import { showErrorToast } from '../../utils/toast-helper';
 
 export const SignInPart = ({login}) => {
   const navigate = useNavigate();
@@ -25,6 +26,7 @@ export const SignInPart = ({login}) => {
       console.log("Login Success.");
       navigate("/")
     } catch (error ){
+      showErrorToast("Invalid email or password.");
       console.log(error);
     }
   }

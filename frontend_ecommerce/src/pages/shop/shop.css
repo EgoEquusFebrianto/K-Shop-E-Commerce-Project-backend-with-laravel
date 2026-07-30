@@ -1,29 +1,61 @@
 .shopTitle {
   margin-top: 100px;
   text-align: center;
-  font-size: 40px;
-}
-.products {
-  width: 100%;
-  height: auto;
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  place-items: center;
+  margin-bottom: 30px;
 }
 
+.shopTitle h1 {
+  margin: 0;
+  font-size: clamp(2rem, 5vw, 2.8rem);
+  font-weight: 700;
+}
+
+/* Product Grid */
+
+.products {
+  /* width: 100%; */
+  /* height: auto; */
+
+  width: min(1400px, 95%);
+  margin: 0 auto 50px;
+
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  /* grid-template-columns: 1fr 1fr 1fr; */
+
+  gap: 32px;
+  /* place-items: center; */
+}
+
+/* Product Card */
+
 .product {
-  border-radius: 15px;
-  width: 200px;
+  background: #FFF;
+  border-radius: 18px;
+  padding: 20px;
+  
+  /* width: 200px;
   height: 350px;
-  margin: 100px;
+  margin: 100px; */
+
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
+  /* justify-content: center; */
+
+  transition: .25s ease;
+}
+
+.product:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, .15);
 }
 
 .product img {
-  width: 400px;
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    object-fit: contain;
+    margin-bottom: 18px;
 }
 
 .product .description {
@@ -35,6 +67,32 @@
   cursor: pointer;
 }
 
+/* Description */
+.product .description {
+    width: 100%;
+
+    text-align: center;
+
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.product .description p {
+    margin: 0;
+}
+
+.product .description b {
+    font-size: 1.1rem;
+}
+
+.product .description p:last-child {
+    color: #444;
+    font-size: 1rem;
+    font-weight: 600;
+}
+
+/* Button */
 .addToCartBttn {
   background-color: transparent;
   border: 2px solid rgb(19, 19, 19);
@@ -50,4 +108,31 @@
   background-color: rgb(19, 19, 19);
   color: white;
   cursor: pointer;
+}
+
+/* Tablet */
+
+@media (max-width:768px){
+  .products{
+      width:92%;
+      gap:24px;
+  }
+}
+
+/* Mobile */
+
+@media (max-width:480px){
+    .shopTitle{
+        margin-top:90px;
+    }
+
+    .products{
+        width:95%;
+        gap:20px;
+    }
+
+    .product{
+        padding:16px;
+    }
+
 }

@@ -26,7 +26,11 @@ export const AuthProvider = ({children}) => {
 
   // Register
   const register = useCallback(async (request) => {
-    return await AuthService.register(request);
+    const data = await AuthService.register(request)
+
+    setUser(data.user);
+    setIsAuthenticated(true);
+    return data;
   }, []);
 
   // Logout

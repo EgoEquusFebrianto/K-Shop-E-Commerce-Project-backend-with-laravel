@@ -18,7 +18,11 @@ const AuthService = {
 
     register: async (request) => {
         const response = await API.post("/auth/register", request);
-        
+
+        // simpan data ke localStorage
+        const {token, user} = response.data;
+        TokenStorage.save(token, user);
+
         return response.data
     },
 

@@ -1,5 +1,7 @@
 import React, { useState } from 'react'
 import SocialIcons from '../../components/auth-form/SocialIcons'
+import { useNavigate } from 'react-router-dom';
+import { showErrorToast } from '../../utils/toast-helper';
 
 const initialForm = {
   fullname: "",
@@ -11,6 +13,8 @@ const initialForm = {
 
 export const SignUpPart = ({register}) => {
   const [form, setForm] = useState(initialForm);
+  const navigate = useNavigate();
+
 
   const handleChange = (e) => {
     const {name, value} = e.target;
@@ -25,7 +29,9 @@ export const SignUpPart = ({register}) => {
       console.log("Register Successful.");
       
       setForm(initialForm);
+      navigate("/");
     } catch (error) {
+      showErrorToast("Invalid email or password.");
       console.log(error);
     }
   }
