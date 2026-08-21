@@ -388,15 +388,24 @@ Endpoint untuk membuat pesanan baru serta mengambil riwayat transaksi yang dimil
 Meskipun aplikasi K-Shop E-Commerce telah mengimplementasikan fitur-fitur utama sebuah platform e-commerce, masih terdapat beberapa pengembangan yang dapat dilakukan untuk meningkatkan fungsionalitas, keamanan, maupun pengalaman pengguna. Beberapa pengembangan yang direncanakan antara lain:
 
 * Implementasi sistem pembayaran (*payment gateway*) sehingga proses checkout dapat dilakukan secara langsung.
-* Penambahan fitur pencarian (*search*), filter, dan pengurutan (*sorting*) produk.
+
 * Implementasi sistem ulasan (*review*) dan penilaian (*rating*) produk oleh pengguna.
 * Pengembangan dashboard administrator untuk mengelola produk, kategori, pesanan, dan pengguna.
 * Integrasi layanan pengiriman (*shipping service*) beserta perhitungan ongkos kirim.
 * Penambahan notifikasi transaksi melalui email.
-* Optimasi performa menggunakan mekanisme *caching* pada sisi backend maupun frontend.
 * Peningkatan keamanan aplikasi, seperti pembatasan percobaan login (*rate limiting*) dan autentikasi dua faktor (*Two-Factor Authentication*).
 * Penyusunan *pipeline* CI/CD untuk mengotomatisasi proses pengujian dan deployment aplikasi.
 * Migrasi aplikasi ke lingkungan berbasis Docker agar proses deployment menjadi lebih mudah dan konsisten.
+
+## Update Pengembangan Terbaru
+
+### 21 Agustus 2026
+
+- Menerapkan **paginasi produk**.
+- Menerapkan fitur **pencarian produk**, **filter berdasarkan kategori**, serta **rekomendasi pencarian produk**.
+- Menambahkan fitur **My Profile** *(belum mencakup fitur Edit Profile)*.
+- Menambahkan **Footer** dan **halaman Contact**.
+- Menerapkan optimasi performa pada sisi frontend menggunakan mekanisme **caching** dengan menyimpan data produk dan kategori pada **Local Storage** browser.
 
 ## Acknowledgements
 
