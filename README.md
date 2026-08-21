@@ -291,9 +291,7 @@ Diagram berikut memperlihatkan alur deployment aplikasi.
 Bagian ini menampilkan implementasi fitur-fitur utama yang telah berhasil dikembangkan pada aplikasi K-Shop E-Commerce. Demonstrasi dibagi menjadi dua bagian, yaitu antarmuka pengguna (*Frontend*) dan layanan *REST API* (*Backend*).
 
 Live DEMO: http://ecommercekudadiri.my.id/ <br>
-CATATAN: WEBSITE Berlaku hingga 29 Agustus 2026 <br>
 Bila test di Handphone gagal (ERR_CONNECTION_RESET) bisa diakses melalui ip: http://103.55.38.32
-
 ---
 
 ## Front-End
