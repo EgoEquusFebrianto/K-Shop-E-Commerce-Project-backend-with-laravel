@@ -6,21 +6,20 @@ Proyek ini dikembangkan sebagai sarana pembelajaran sekaligus portofolio untuk m
 
 ## Daftar Isi
 
-* [Gambaran Proyek](#gambaran-proyek)
-* [Teknologi dan Dependency Proyek](#teknologi-dan-dependency-proyek)
-* [Arsitektur Proyek](#arsitektur-proyek)
-* [Struktur Proyek](#struktur-proyek)
-* [Struktur Skema Database](#struktur-skema-database)
-* [Instalasi Proyek](#instalasi-proyek)
-* [Alur Deployment](#alur-deployment)
-* [Hasil dan Demo Program](#hasil-dan-demo-program)
-
-    * [Front-End](#front-end)
-    * [Back-End](#back-end)
-* [Pengembangan di Masa Depan](#pengembangan-di-masa-depan)
-* [Acknowledgements](#acknowledgements)
-* [Author](#author)
-* [License](#license)
+- [Gambaran Proyek](#gambaran-proyek)
+- [Teknologi dan Dependency Proyek](#teknologi-dan-dependency-proyek)
+- [Arsitektur Proyek](#arsitektur-proyek)
+- [Struktur Proyek](#struktur-proyek)
+- [Struktur Skema Database](#struktur-skema-database)
+- [Instalasi Proyek](#instalasi-proyek)
+- [Alur Deployment](#alur-deployment)
+- [Hasil dan Demo Program](#hasil-dan-demo-program)
+    - [Front-End](#front-end)
+    - [Back-End](#back-end)
+- [Pengembangan di Masa Depan](#pengembangan-di-masa-depan)
+- [Acknowledgements](#acknowledgements)
+- [Author](#author)
+- [License](#license)
 
 ## Gambaran Proyek
 
@@ -387,15 +386,14 @@ Endpoint untuk membuat pesanan baru serta mengambil riwayat transaksi yang dimil
 
 Meskipun aplikasi K-Shop E-Commerce telah mengimplementasikan fitur-fitur utama sebuah platform e-commerce, masih terdapat beberapa pengembangan yang dapat dilakukan untuk meningkatkan fungsionalitas, keamanan, maupun pengalaman pengguna. Beberapa pengembangan yang direncanakan antara lain:
 
-* Implementasi sistem pembayaran (*payment gateway*) sehingga proses checkout dapat dilakukan secara langsung.
-
-* Implementasi sistem ulasan (*review*) dan penilaian (*rating*) produk oleh pengguna.
-* Pengembangan dashboard administrator untuk mengelola produk, kategori, pesanan, dan pengguna.
-* Integrasi layanan pengiriman (*shipping service*) beserta perhitungan ongkos kirim.
-* Penambahan notifikasi transaksi melalui email.
-* Peningkatan keamanan aplikasi, seperti pembatasan percobaan login (*rate limiting*) dan autentikasi dua faktor (*Two-Factor Authentication*).
-* Penyusunan *pipeline* CI/CD untuk mengotomatisasi proses pengujian dan deployment aplikasi.
-* Migrasi aplikasi ke lingkungan berbasis Docker agar proses deployment menjadi lebih mudah dan konsisten.
+- Implementasi sistem pembayaran (*payment gateway*) sehingga proses checkout dapat dilakukan secara langsung.
+- Implementasi sistem ulasan (*review*) dan penilaian (*rating*) produk oleh pengguna.
+- Pengembangan dashboard administrator untuk mengelola produk, kategori, pesanan, dan pengguna.
+- Integrasi layanan pengiriman (*shipping service*) beserta perhitungan ongkos kirim.
+- Penambahan notifikasi transaksi melalui email.
+- Peningkatan keamanan aplikasi, seperti pembatasan percobaan login (*rate limiting*) dan autentikasi dua faktor (*Two-Factor Authentication*).
+- Penyusunan *pipeline* CI/CD untuk mengotomatisasi proses pengujian dan deployment aplikasi.
+- Migrasi aplikasi ke lingkungan berbasis Docker agar proses deployment menjadi lebih mudah dan konsisten.
 
 ## Update Pengembangan Terbaru
 
