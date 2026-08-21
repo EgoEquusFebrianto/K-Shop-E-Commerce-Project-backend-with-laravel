@@ -30,6 +30,12 @@ class ProductController extends Controller
         return response()->json([
             'message' => 'Product retrieved successfully.',    
             'data' => ProductResource::collection($products),
+            'pagination' => [
+                'page' => $products->currentPage(),
+                'totalPage' => $products->lastPage(),
+                'first' => $products->onFirstPage(),
+                'last' => $products->currentPage() === $products->lastPage(),
+            ],
         ]);
     }
 

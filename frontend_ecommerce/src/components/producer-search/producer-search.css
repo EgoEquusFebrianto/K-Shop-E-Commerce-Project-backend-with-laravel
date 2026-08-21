@@ -1,0 +1,23 @@
+.product-search-panel {
+    width: 95%;
+    max-width: 1200px;
+    margin: 24px auto;
+    padding: 18px 24px;
+
+    display: flex;
+    align-items: center;
+    gap: 20px;
+
+    background: white;
+
+    border: 1px solid #eBeBeB;
+    border-radius: 12px;
+
+    box-shadow: 0 2px 8px rgba(0, 0, 0, .05);
+}
+
+.search-container {
+    flex: 1; /* Supaya Search mengambil seluruh sisa ruang.*/
+    display: flex;
+    align-items: center;
+}

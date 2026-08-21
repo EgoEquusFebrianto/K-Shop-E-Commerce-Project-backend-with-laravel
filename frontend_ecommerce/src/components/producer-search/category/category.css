@@ -1,0 +1,28 @@
+.category-select {
+    min-width: 150px;
+    height: 42px;
+
+    padding: 0 12px;
+
+    border: 1px solid #d9d9d9;
+    border-radius: 8px;
+
+    background-color: white;
+
+    font-size: 15px;
+    cursor: pointer;
+    outline: none;
+
+    transition: 
+        border-color .2s ease,
+        box-shadow .2s ease;
+}
+
+.category-select:hover {
+    border-color: #444;
+}
+
+.category-select:focus {
+    border-color: #222;
+    box-shadow: 0 0 0 3px rgba(0, 0, 0, .08);
+}

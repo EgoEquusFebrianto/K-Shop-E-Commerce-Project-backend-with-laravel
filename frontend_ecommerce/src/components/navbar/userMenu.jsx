@@ -36,7 +36,7 @@ export const UserMenu = () => {
     }, [])
     
     const avatarUrl = user?.avatar ?? DEFAULT_AVATAR;
-    console.log(user);
+    // console.log(user);
     
     return (
         <div className='user-menu' ref={menuRef}>

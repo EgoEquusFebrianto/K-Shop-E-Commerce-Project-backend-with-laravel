@@ -1,0 +1,21 @@
+.search-button {
+    width: 52px;
+    height: 42px;
+
+    border: none;
+    background: #222;
+    color: white;
+    border-radius: 0 8px 8px 0;
+
+    cursor: pointer;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    transition: background-color .2s ease;   
+}
+
+.search-button:hover {
+    background: #444;
+}

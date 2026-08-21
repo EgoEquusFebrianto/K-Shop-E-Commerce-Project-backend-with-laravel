@@ -26,6 +26,12 @@ const AuthService = {
         return response.data
     },
 
+    getMe: async () => {
+        const response = await API.get("/auth/me");
+
+        return response.data;
+    },
+    
     logout: () => {
         TokenStorage.clear();
     },

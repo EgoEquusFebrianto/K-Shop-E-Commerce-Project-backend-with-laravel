@@ -27,7 +27,7 @@ export const SignInPart = ({login}) => {
       navigate("/")
     } catch (error ){
       showErrorToast("Invalid email or password.");
-      console.log(error);
+      console.error(error);
     }
   }
 

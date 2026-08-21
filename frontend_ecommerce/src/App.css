@@ -62,6 +62,8 @@ a {
 .App {
   width: 100%;
   min-height: 100vh;
+  display: flex;
+  flex-direction: column;
   /* height: auto;
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif; */
 }
@@ -74,4 +76,8 @@ a {
 .container {
   width: min(var(--container-width), 92%);
   margin-inline: auto;
+}
+
+.page-content{
+    flex:1;
 }

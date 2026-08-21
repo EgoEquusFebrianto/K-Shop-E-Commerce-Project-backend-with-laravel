@@ -17,8 +17,8 @@ class ProductSeeder extends Seeder
         $technology = Category::where('slug', 'technology')->first();
         $fashion = Category::where('slug', 'fashion')->first();
         $now = now();
-
-        Product::insert([
+        
+        $baseProducts = [
             [
                 'category_id' => $technology->id,
                 'name' => 'iPhone',
@@ -115,6 +115,20 @@ class ProductSeeder extends Seeder
                 'created_at' => $now,
                 'updated_at' => $now,
             ],
-        ]);
+        ];
+
+        // Product::insert($baseProducts);
+
+        $allProducts = [];
+        for ($i = 0; $i < 7; $i++) {
+            foreach ($baseProducts as $product) {
+                $duplicate = $product;
+                $duplicate['name'] = $product['name'] . ' (Copy ' . ($i + 1) . ')';
+                $duplicate['slug'] = $product['slug'] . '-copy-' . ($i + 1);
+                $allProducts[] = $duplicate;
+            }
+        }
+
+        Product::insert($allProducts);
     }
 }

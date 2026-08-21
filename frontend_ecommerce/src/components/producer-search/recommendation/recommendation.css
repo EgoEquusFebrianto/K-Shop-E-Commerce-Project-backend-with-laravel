@@ -1,0 +1,27 @@
+.recommendation {
+    position: absolute;
+
+    top: 100%;
+    left: 0;
+    right: 0;
+
+    margin-top: 4px;
+    background: white;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, .12);
+
+    z-index: 1;
+}
+
+.recommendation-item {
+    padding: 12px 16px;
+    cursor: pointer;
+    transition: background-color .15s ease;
+}
+
+.recommendation-item:hover {
+    background: #f7f7f7;
+}

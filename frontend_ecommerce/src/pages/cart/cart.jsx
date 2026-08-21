@@ -14,7 +14,7 @@ export const Cart = () => {
   const { isAuthenticated } = useAuth();
 
   const navigate = useNavigate();
-  console.log(cartItems);
+  // console.log(cartItems);
 
   const handleCheckout = async () => {
 

@@ -4,10 +4,11 @@ import { Navbar } from "./components/navbar/navbar";
 import { Shop } from "./pages/shop/shop";
 import { Contact } from "./pages/contact";
 import { Cart } from "./pages/cart/cart";
-import { Testing } from "./Testing";
 import { LoginPage } from "./pages/login/LoginPage";
 import { Orders } from "./pages/order/Orders";
 import { Toaster } from "react-hot-toast";
+import { Footer } from "./components/footer/footer-file";
+import { UserProfile } from "./components/profle/user-profile";
 
 function AppContent() {
   const location = useLocation();
@@ -16,14 +17,19 @@ function AppContent() {
   return (
     <div className="App">
       {!hideNavbar && <Navbar />}
-      <Routes>
-        <Route path="/" element={<Shop />} />
-        <Route path="/contact" element={<Contact />} />
-        <Route path="/cart" element={<Cart />} />
-        <Route path="/login" element={<LoginPage state={false} />} />
-        <Route path="/register" element={<LoginPage state={true} />} />
-        <Route path="/orders" element={<Orders />} />
-      </Routes>
+      <div className="page-content">
+        <Routes>
+          {/* <Route path="/" element={<TestPage />} /> */}
+          <Route path="/" element={<Shop />} />
+          <Route path="/contact" element={<Contact />} />
+          <Route path="/cart" element={<Cart />} />
+          <Route path="/login" element={<LoginPage state={false} />} />
+          <Route path="/register" element={<LoginPage state={true} />} />
+          <Route path="/orders" element={<Orders />} />
+          <Route path="/profile" element={<UserProfile />} />
+        </Routes>
+      </div>
+      {!hideNavbar && <Footer />}
     </div>
   );
 }

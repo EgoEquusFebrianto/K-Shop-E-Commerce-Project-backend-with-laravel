@@ -42,17 +42,37 @@ export const AuthProvider = ({children}) => {
 
   // Restore Login
   useEffect(() => {
-    const token = TokenStorage.getToken();
-    const user = TokenStorage.getUser();
+    const restoreSession = async () => {
+      const token = TokenStorage.getToken();
 
-    if (token && user && !isTokenExpired(token)) {
-      setUser(user);
-      setIsAuthenticated(true);
-    } else {
-      AuthService.logout();
-    }
+      if (!token || isTokenExpired(token)) {
+        AuthService.logout();
+        setLoading(false);
+        return;
+      }
 
-    setLoading(false);
+      try {
+        const response = await AuthService.getMe();
+
+        const user = response.data ?? response.message;
+
+        setUser(user);
+        setIsAuthenticated(true);
+
+        // Simpan data user terbaru
+        TokenStorage.save(token, user);
+      } catch (error) {
+        console.error("Failed to restore session:", error);
+
+        AuthService.logout();
+        setUser(null);
+        setIsAuthenticated(false);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    restoreSession();
   }, []);
 
 

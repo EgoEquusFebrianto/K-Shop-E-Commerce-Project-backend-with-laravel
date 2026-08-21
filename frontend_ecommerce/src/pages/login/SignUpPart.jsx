@@ -32,7 +32,7 @@ export const SignUpPart = ({register}) => {
       navigate("/");
     } catch (error) {
       showErrorToast("Invalid email or password.");
-      console.log(error);
+      console.error(error);
     }
   }
   // console.log(form);
