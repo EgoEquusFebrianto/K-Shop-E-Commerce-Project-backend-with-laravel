@@ -487,6 +487,12 @@ Meskipun aplikasi K-Shop E-Commerce telah mengimplementasikan fitur-fitur utama 
 
 ## Update Pengembangan Terbaru
 
+### 02 September 2026
+
+- Menerapkan Performance Testing menggunakan Grafana K6.
+- Membuat rancangan Database Redis
+- Mengoptimalkan query API
+
 ### 21 Agustus 2026
 
 - Menerapkan **paginasi produk**.
