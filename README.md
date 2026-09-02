@@ -16,6 +16,7 @@ Proyek ini dikembangkan sebagai sarana pembelajaran sekaligus portofolio untuk m
 - [Hasil dan Demo Program](#hasil-dan-demo-program)
     - [Front-End](#front-end)
     - [Back-End](#back-end)
+- [Performance Testing](#performance-testing)
 - [Pengembangan di Masa Depan](#pengembangan-di-masa-depan)
 - [Acknowledgements](#acknowledgements)
 - [Author](#author)
@@ -382,10 +383,66 @@ Endpoint untuk membuat pesanan baru serta mengambil riwayat transaksi yang dimil
 
 ![Order Postman](assets/order.png)
 
+## Performance Testing
+
+Pengujian performa dilakukan menggunakan **k6** untuk mengukur kemampuan REST API dalam menangani request secara bersamaan. Pengujian difokuskan pada endpoint produk:
+
+```text
+GET /api/products
+```
+
+---
+
+### Skenario Pengujian
+
+Pengujian dilakukan dengan konfigurasi hingga **100 Virtual Users (VUs)**. Beban dinaikkan secara bertahap (*ramp-up*), dipertahankan pada beban tinggi, kemudian diturunkan kembali (*ramp-down*).
+
+```text
+10s  → Ramp-up
+50s  → 100 VUs
+10s  → Ramp-down
+```
+
+Total pengujian berlangsung sekitar **2 menit 10 detik** dengan maksimal **100 VUs**.
+
+---
+
+### Hasil Pengujian
+
+| Metric                | Hasil       |
+| --------------------- | ----------- |
+| Total HTTP Requests   | 4.347       |
+| Request Rate          | 33,43 req/s |
+| HTTP Error Rate       | 0,00%       |
+| Average Response Time | 1,12 detik  |
+| Median Response Time  | 1,11 detik  |
+| P90 Response Time     | 2,65 detik  |
+| P95 Response Time     | 2,70 detik  |
+| P99 Response Time     | 2,80 detik  |
+| Maximum Response Time | 2,87 detik  |
+| Maximum Virtual Users | 100 VUs     |
+
+Hasil pengujian menunjukkan bahwa seluruh **4.347 HTTP request berhasil diproses tanpa HTTP failure** (`http_req_failed = 0%`). Endpoint juga tetap mengembalikan response dengan status `200` dan format JSON.
+
+Namun, **response time masih cukup tinggi pada saat menerima beban**, dengan rata-rata **1,12 detik** dan P95 sebesar **2,70 detik**. Threshold yang ditetapkan, yaitu P95 < 200 ms dan P99 < 500 ms, belum tercapai.
+
+Pengujian juga menunjukkan bahwa sebagian besar request belum memenuhi target response time < 200 ms, yaitu **981 request (22%) berhasil memenuhi target**, sedangkan **3.366 request (78%) melebihi target tersebut**.
+
+---
+
+### Kesimpulan
+
+Secara fungsional, API mampu menangani pengujian hingga **100 VUs tanpa HTTP request failure**. Namun, dari sisi latency masih terdapat ruang untuk optimasi, terutama pada kondisi concurrent request yang tinggi.
+
+Hasil ini menjadi dasar untuk pengembangan berikutnya, seperti optimasi query database, penggunaan database indexing, caching, serta optimasi konfigurasi server dan aplikasi Laravel.
+
+**Hasil pengujian lengkap:** `result/test-1.txt`
+
 ## Pengembangan di Masa Depan
 
 Meskipun aplikasi K-Shop E-Commerce telah mengimplementasikan fitur-fitur utama sebuah platform e-commerce, masih terdapat beberapa pengembangan yang dapat dilakukan untuk meningkatkan fungsionalitas, keamanan, maupun pengalaman pengguna. Beberapa pengembangan yang direncanakan antara lain:
 
+- implementasi Database Redis untuk meningkatkan performance API khususnya method GET website.
 - Implementasi sistem pembayaran (*payment gateway*) sehingga proses checkout dapat dilakukan secara langsung.
 - Implementasi sistem ulasan (*review*) dan penilaian (*rating*) produk oleh pengguna.
 - Pengembangan dashboard administrator untuk mengelola produk, kategori, pesanan, dan pengguna.
