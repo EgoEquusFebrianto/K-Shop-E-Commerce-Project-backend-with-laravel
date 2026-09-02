@@ -385,7 +385,7 @@ Endpoint untuk membuat pesanan baru serta mengambil riwayat transaksi yang dimil
 
 ## Performance Testing
 
-Pengujian performa dilakukan menggunakan **k6** untuk mengukur kemampuan REST API dalam menangani request secara bersamaan. Pengujian difokuskan pada endpoint produk:
+Pengujian performa dilakukan menggunakan **k6** untuk mengukur kemampuan REST API dalam menangani peningkatan jumlah pengguna secara bertahap. Pengujian difokuskan pada endpoint:
 
 ```text
 GET /api/products
@@ -395,17 +395,45 @@ GET /api/products
 
 ### Skenario Pengujian
 
-Pengujian dilakukan dengan konfigurasi hingga **100 Virtual Users (VUs)**. Beban dinaikkan secara bertahap (*ramp-up*), dipertahankan pada beban tinggi, kemudian diturunkan kembali (*ramp-down*).
+Pengujian menggunakan pendekatan *load testing* dengan jumlah **Virtual Users (VUs)** yang dinaikkan secara bertahap dari 1 hingga maksimal 100 VUs.
 
 ```text
-10s  → Ramp-up
-50s  → 100 VUs
-10s  → Ramp-down
+1 VU
+ │
+ ├── 10s ramp-up
+ ▼
+10 VUs
+ │
+ ├── 20s
+ ├── 10s ramp-up
+ ▼
+50 VUs
+ │
+ ├── 20s
+ ├── 10s ramp-up
+ ▼
+100 VUs
+ │
+ ├── 20s
+ └── 10s ramp-down
+ ▼
+0 VUs
 ```
 
-Total pengujian berlangsung sekitar **2 menit 10 detik** dengan maksimal **100 VUs**.
+Total durasi pengujian adalah sekitar **2 menit 10 detik**, dengan beban maksimum **100 VUs**.
 
 ---
+
+### Threshold Pengujian
+
+Pengujian menggunakan beberapa threshold untuk mengevaluasi reliability dan latency API:
+
+| Metric              | Threshold |
+| ------------------- | --------- |
+| Error Rate          | < 5%      |
+| HTTP Request Failed | < 5%      |
+| P95 Response Time   | < 200 ms  |
+| P99 Response Time   | < 500 ms  |
 
 ### Hasil Pengujian
 
@@ -413,28 +441,33 @@ Total pengujian berlangsung sekitar **2 menit 10 detik** dengan maksimal **100 V
 | --------------------- | ----------- |
 | Total HTTP Requests   | 4.347       |
 | Request Rate          | 33,43 req/s |
-| HTTP Error Rate       | 0,00%       |
+| Maximum Virtual Users | 100 VUs     |
 | Average Response Time | 1,12 detik  |
 | Median Response Time  | 1,11 detik  |
 | P90 Response Time     | 2,65 detik  |
 | P95 Response Time     | 2,70 detik  |
 | P99 Response Time     | 2,80 detik  |
 | Maximum Response Time | 2,87 detik  |
-| Maximum Virtual Users | 100 VUs     |
+| HTTP Request Failed   | 0,00%       |
+| Custom Error Rate     | 0,00%       |
 
-Hasil pengujian menunjukkan bahwa seluruh **4.347 HTTP request berhasil diproses tanpa HTTP failure** (`http_req_failed = 0%`). Endpoint juga tetap mengembalikan response dengan status `200` dan format JSON.
+---
 
-Namun, **response time masih cukup tinggi pada saat menerima beban**, dengan rata-rata **1,12 detik** dan P95 sebesar **2,70 detik**. Threshold yang ditetapkan, yaitu P95 < 200 ms dan P99 < 500 ms, belum tercapai.
+### Analisis Hasil
 
-Pengujian juga menunjukkan bahwa sebagian besar request belum memenuhi target response time < 200 ms, yaitu **981 request (22%) berhasil memenuhi target**, sedangkan **3.366 request (78%) melebihi target tersebut**.
+Hasil pengujian menunjukkan bahwa API mampu menangani **4.347 HTTP requests** dengan beban hingga **100 VUs** tanpa mengalami HTTP request failure. Seluruh request juga berhasil memperoleh status `200` dan response dalam format JSON.
+
+Namun, performa latency belum memenuhi threshold yang ditentukan. **P95 response time mencapai 2,70 detik**, sedangkan target yang ditetapkan adalah di bawah 200 ms. P99 juga mencapai **2,80 detik**, melebihi target 500 ms.
+
+Dari total **17.388 checks**, sebanyak **14.022 checks (80,64%) berhasil** dan **3.366 checks (19,35%) gagal**. Kegagalan tersebut terutama berasal dari check `response time < 200ms`, bukan karena HTTP request mengalami error.
 
 ---
 
 ### Kesimpulan
 
-Secara fungsional, API mampu menangani pengujian hingga **100 VUs tanpa HTTP request failure**. Namun, dari sisi latency masih terdapat ruang untuk optimasi, terutama pada kondisi concurrent request yang tinggi.
+Secara reliability, API menunjukkan hasil yang baik karena tidak terdapat HTTP request failure selama pengujian hingga 100 VUs. Namun, terdapat **bottleneck pada response time** ketika aplikasi menerima beban secara bersamaan.
 
-Hasil ini menjadi dasar untuk pengembangan berikutnya, seperti optimasi query database, penggunaan database indexing, caching, serta optimasi konfigurasi server dan aplikasi Laravel.
+Hasil ini menunjukkan bahwa optimasi selanjutnya dapat difokuskan pada **query database, indexing, caching, dan optimasi aplikasi/server Laravel**.
 
 **Hasil pengujian lengkap:** `result/test-1.txt`
 
