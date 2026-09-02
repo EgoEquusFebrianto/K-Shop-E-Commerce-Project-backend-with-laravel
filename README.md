@@ -469,7 +469,7 @@ Secara reliability, API menunjukkan hasil yang baik karena tidak terdapat HTTP r
 
 Hasil ini menunjukkan bahwa optimasi selanjutnya dapat difokuskan pada **query database, indexing, caching, dan optimasi aplikasi/server Laravel**.
 
-**Hasil pengujian lengkap:** `result/test-1.txt`
+**Hasil pengujian lengkap:** `hasil_test/test-1.txt`
 
 ## Pengembangan di Masa Depan
 
