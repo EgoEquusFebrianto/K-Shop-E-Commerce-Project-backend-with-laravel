@@ -9,13 +9,14 @@ use App\Models\User;
 use App\Services\Contracts\AuthServiceInterface;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
-use Pest\ArchPresets\Laravel;
 
 class AuthService implements AuthServiceInterface
 {
+    public function __construct(
+        private readonly RefreshTokenService $refreshTokenService
+    ) {}
 
     public function register(array $data): JsonResponse
     {
@@ -38,32 +39,20 @@ class AuthService implements AuthServiceInterface
                 'avatar' => 'profile/default/customer1.jpg',
             ]);
 
-            $token = $user->createToken('auth_token')->plainTextToken;
-            return response()->json([
-                'message' => 'Register success',
-                'token' => $token,
-                'user' => new UserResource($user),
-            ], 201);
+            $accessToken = $this->createAccessToken($user);
+            $refreshToken = $this->createRefreshToken($user);
+
+            return $this->authResponse(
+                $user, 
+                'Register success.',
+                $accessToken,
+                $refreshToken
+            );
         });
     }
 
     public function login(array $data): JsonResponse
     {
-        // if(!Auth::attempt([
-        //     'email' => $data['email'],
-        //     'password' => $data['password'],
-        // ])) {
-        //     return response()->json([
-        //         'message' => 'Invalid email or password.',
-        //     ], 401);
-        // }
-
-        // /**
-        //  * @var \App\Models\User $user
-        //  */
-        // $user = Auth::user();
-        // $token = $user->createToken('auth_token')->plainTextToken;
-
         $user = User::where('email', $data['email'])->first();
 
         if (!$user || !Hash::check($data['password'], $user->password)) {
@@ -72,22 +61,82 @@ class AuthService implements AuthServiceInterface
             ], 401);
         }
 
-        $token = $user->createToken('auth_token')->plainTextToken;
+        $accessToken = $this->createAccessToken($user);
+        $refreshToken = $this->createRefreshToken($user);
 
-        return response()->json([
-            'message' => 'Login Success',
-            'token' => $token,
-            'user'=> new UserResource($user),
-        ], 200);
+        return $this->authResponse(
+            $user, 
+            'Login success.',
+            $accessToken,
+            $refreshToken
+        );
+    }
+
+    public function refresh(Request $request): JsonResponse
+    {
+        $refreshToken = $request->cookie(
+            config('auth.refresh_token.cookie_name')
+        );
+
+        if (!$refreshToken) {
+            return response()->json([
+                'message' => 'Refresh token is missing.',
+            ], 401);
+        }
+
+        $userId = $this->refreshTokenService->getUserId($refreshToken);
+        if (!$userId) {
+            return response()->json([
+                'message' => 'Invalid or expired refresh token.'
+            ], 401);
+        }
+
+        $user = User::find($userId);
+        if (!$user) {
+            $this->refreshTokenService->revoke($refreshToken);
+
+            return response()->json([
+                'message' => 'User not found.'
+            ], 401);
+        }
+
+        /**
+         * Revoke old access tokens
+         */
+
+        $accessToken = $this->createAccessToken($user);
+        $newRefreshToken = $this->refreshTokenService->rotate(
+            $refreshToken, 
+            $user->id
+        );
+
+        return $this->authResponse(
+            $user, 
+            'Token refreshed successfully.',
+            $accessToken,
+            $newRefreshToken
+        );
     }
 
     public function logout(Request $request): JsonResponse
     {  
         $request->user()->currentAccessToken()->delete();
 
-        return response()->json([
-            'message' => 'Logout success.'
-        ], 200);
+        $refreshToken = $request->cookie(
+            config('auth.refresh_token.cookie_name')
+        );
+
+        if ($refreshToken) {
+            $this->refreshTokenService->revoke($refreshToken);
+        }
+
+        return response()
+            ->json([
+                'message' => 'Logout success.'
+            ], 200)
+            ->withoutCookie(
+                config('auth.refresh_token.cookie_name')
+            );
     }
 
     public function me(Request $request): JsonResponse
@@ -96,4 +145,71 @@ class AuthService implements AuthServiceInterface
             'message' => new UserResource($request->user())
         ], 200);
     }
+    
+    private function createAccessToken(User $user): string
+    {
+        return $user->createToken(
+            'access_token',
+            ['*'],
+            now()->addMinutes(
+                config('authentication.access_token.ttl_minutes')
+            )
+        )->plainTextToken;
+    }
+
+    private function createRefreshToken(User $user): array
+    {
+        return $this->refreshTokenService->issue($user->id);
+    }
+
+    private function authResponse(
+        User $user,
+        string $message,
+        string $accessToken,
+        array $refreshToken
+    ): JsonResponse
+    {
+        return response()
+            ->json([
+                'message' => $message,
+                'access_token' => $accessToken,
+                'user' => new UserResource($user),
+            ], 201)
+            ->cookie(
+                config('auth.refresh_token.cookie_name'),
+                $refreshToken['token'],
+                config('auth.refresh_token.ttl_days') * 24 * 60,
+                '/',
+                null,
+                config('auth.refresh_token.cookie_secure'),
+                config('auth.refresh_token.cookie_http_only'),
+                false,
+                config('auth.refresh_token.cookie_same_site'),
+            );
+    }
+
+    // public function login(array $data): JsonResponse
+    // {
+    //     if(!Auth::attempt([
+    //         'email' => $data['email'],
+    //         'password' => $data['password'],
+    //     ])) {
+    //         return response()->json([
+    //             'message' => 'Invalid email or password.',
+    //         ], 401);
+    //     }
+
+    //     /**
+    //      * @var \App\Models\User $user
+    //      */
+    //     $user = Auth::user();
+    //     $token = $user->createToken('auth_token')->plainTextToken;
+
+    //     return response()
+    //         ->json([
+    //             'message' => 'Login Success',
+    //             'access_token' => $token,
+    //             'user'=> new UserResource($user),
+    //         ], 200)
+    // }
 }

@@ -114,4 +114,36 @@ return [
 
     'password_timeout' => env('AUTH_PASSWORD_TIMEOUT', 10800),
 
+    /*
+    |--------------------------------------------------------------------------
+    | Access Token
+    |--------------------------------------------------------------------------
+    */
+
+    'access_token' => [
+        'ttl_minutes' => 30,
+    ],
+
+    /*
+    |--------------------------------------------------------------------------
+    | Refresh Token
+    |--------------------------------------------------------------------------
+    */
+
+    'refresh_token' => [
+        'ttl_days' => 7,
+        'cookie_name' => 'refresh_token',
+
+        /*
+        |--------------------------------------------------------------------------
+        | Secure cookie should true if application already implement HTTPS.
+        | For development HTTP, use false
+        |--------------------------------------------------------------------------
+        */
+
+        'cookie_secure' => env("REFRESH_TOKEN_COOKIE_SECURE", false),
+        'cookie_http_only' => true,
+        'cookie_same_site' => 'lax',
+    ],
+
 ];

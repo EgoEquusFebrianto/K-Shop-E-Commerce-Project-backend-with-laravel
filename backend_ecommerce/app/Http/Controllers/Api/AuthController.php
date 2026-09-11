@@ -36,6 +36,11 @@ class AuthController extends Controller
         return $this->authService->logout($request);
     }
 
+    public function refresh(Request $request): JsonResponse
+    {
+        return $this->authService->refresh($request);
+    }
+
     public function me(Request $request): JsonResponse
     {
         return $this->authService->me($request);
