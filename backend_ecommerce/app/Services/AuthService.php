@@ -81,13 +81,15 @@ class AuthService implements AuthServiceInterface
         if (!$refreshToken) {
             return response()->json([
                 'message' => 'Refresh token is missing.',
+                'code' => 'REFRESH_TOKEN_MISSING',
             ], 401);
         }
 
         $userId = $this->refreshTokenService->getUserId($refreshToken);
         if (!$userId) {
             return response()->json([
-                'message' => 'Invalid or expired refresh token.'
+                'message' => 'Invalid or expired refresh token.',
+                'code' => 'REFRESH_TOKEN_EXPIRED',
             ], 401);
         }
 
@@ -96,26 +98,23 @@ class AuthService implements AuthServiceInterface
             $this->refreshTokenService->revoke($refreshToken);
 
             return response()->json([
-                'message' => 'User not found.'
+                'message' => 'User not found.',
+                'code' => 'USER_NOT_FOUND',
             ], 401);
         }
 
-        /**
-         * Revoke old access tokens
-         */
-
         $accessToken = $this->createAccessToken($user);
-        $newRefreshToken = $this->refreshTokenService->rotate(
-            $refreshToken, 
-            $user->id
-        );
 
-        return $this->authResponse(
-            $user, 
-            'Token refreshed successfully.',
-            $accessToken,
-            $newRefreshToken
-        );
+        return response()->json([
+            'message' => 'Token refreshed successfully',
+            'access_token' => $accessToken,
+            'user' => new UserResource($user),
+        ], 201);
+                
+        // $newRefreshToken = $this->refreshTokenService->rotate(
+        //     $refreshToken, 
+        //     $user->id
+        // );
     }
 
     public function logout(Request $request): JsonResponse
@@ -135,14 +134,16 @@ class AuthService implements AuthServiceInterface
                 'message' => 'Logout success.'
             ], 200)
             ->withoutCookie(
-                config('auth.refresh_token.cookie_name')
+                config('auth.refresh_token.cookie_name'),
+                config('auth.refresh_token.cookie_path')
             );
     }
 
     public function me(Request $request): JsonResponse
     {
         return response()->json([
-            'message' => new UserResource($request->user())
+            'message' => 'Getting current user.',
+            'user' => new UserResource($request->user())
         ], 200);
     }
     
@@ -152,7 +153,7 @@ class AuthService implements AuthServiceInterface
             'access_token',
             ['*'],
             now()->addMinutes(
-                config('authentication.access_token.ttl_minutes')
+                config('auth.access_token.ttl_minutes')
             )
         )->plainTextToken;
     }
@@ -179,7 +180,7 @@ class AuthService implements AuthServiceInterface
                 config('auth.refresh_token.cookie_name'),
                 $refreshToken['token'],
                 config('auth.refresh_token.ttl_days') * 24 * 60,
-                '/',
+                config('auth.refresh_token.cookie_path'),
                 null,
                 config('auth.refresh_token.cookie_secure'),
                 config('auth.refresh_token.cookie_http_only'),

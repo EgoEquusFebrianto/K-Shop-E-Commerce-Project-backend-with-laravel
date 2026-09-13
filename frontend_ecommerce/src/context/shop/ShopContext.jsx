@@ -1,9 +1,10 @@
 import { createContext, useEffect, useState } from "react";
-import axios from "axios";
 import { loadProductCached, saveProducts, isProductCachedExpired } from "../../utils/cache/product-cache"
-import { ShopService } from "./service/shop-service";
-import { getVisiblePage } from "../../components/pagination/pagination-utils";
-import { LoadCategoryCache, SaveCategories, clearCategory } from "../../utils/cache/category-cache"
+import { ShopServicePostgreSQL } from "./service/ShopServicePostgreSQL";
+import { ShopServiceRedis } from "./service/ShopServiceRedis";
+import { getVisiblePage } from "../../components/pagination/getVisiblePage";
+import { LoadCategoryCache, SaveCategories } from "../../utils/cache/category-cache"
+
 export const ShopContext = createContext(null);
 
 export const ShopContextProvider = (props) => {
@@ -24,8 +25,7 @@ export const ShopContextProvider = (props) => {
 
   const fetchProducts = async (pageTarget = page, keywordTarget = keyword) => {
     try {
-      const payload = await ShopService.getAll(pageTarget, keywordTarget, categoryId);
-      console.log("categoryId-from-context", categoryId)
+      const payload = await ShopServicePostgreSQL.getAll(pageTarget, keywordTarget, categoryId);
 
       saveProducts(pageTarget, keywordTarget, categoryId, payload);
       updatePageState(payload);
@@ -46,7 +46,7 @@ export const ShopContextProvider = (props) => {
     }
     
     try {
-      const payload = await ShopService.getAllCategories();
+      const payload = await ShopServicePostgreSQL.getAllCategories();
       // console.log("payload", payload)
 
       SetCategories(payload['data']);
@@ -71,7 +71,7 @@ export const ShopContextProvider = (props) => {
         return;
       }
 
-      const payload = await ShopService.getSuggestions(word, signal);
+      const payload = await ShopServicePostgreSQL.getSuggestions(word, signal);
       setSuggestions(payload);
 
     } catch (error) {

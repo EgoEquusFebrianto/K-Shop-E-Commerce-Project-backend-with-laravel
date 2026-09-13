@@ -1,11 +1,11 @@
 import React from "react";
-import { ShopContext } from "../../context/shop/shop-context";
 import { CartItem } from "./cart-item";
 import { useNavigate } from "react-router-dom";
 import "./cart.css";
 import { useCart } from "../../context/cart-shop/hook/cart-hook";
-import { useShop } from "../../context/shop/hook/shop-hook";
+import { useShop } from "../../context/shop/hook/useShop";
 import { useAuth } from "../../context/auth/hooks/auth-hook";
+import { showLoginRequiredToast } from "../../utils/toast-helper";
 
 export const Cart = () => {
   const { products } = useShop();
@@ -14,7 +14,6 @@ export const Cart = () => {
   const { isAuthenticated } = useAuth();
 
   const navigate = useNavigate();
-  // console.log(cartItems);
 
   const handleCheckout = async () => {
 

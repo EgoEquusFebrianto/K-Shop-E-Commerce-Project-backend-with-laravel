@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react'
-import "./pagination.css"
-import { useShop } from '../../context/shop/hook/shop-hook';
+import { useShop } from '../../context/shop/hook/useShop';
+
+import "./Pagination.css"
 
 export const Pagination = () => {
     const { page, first, last, totalPage, visiblePages, callProducts } = useShop();

@@ -1,5 +1,5 @@
 import React from 'react'
-import { useShop } from '../../../context/shop/hook/shop-hook';
+import { useShop } from '../../../context/shop/hook/useShop';
 import "./category.css";
 
 export const Category = () => {

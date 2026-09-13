@@ -1,6 +1,6 @@
 import React from 'react'
 import "./recommendation.css";
-import { useShop } from '../../../context/shop/hook/shop-hook';
+import { useShop } from '../../../context/shop/hook/useShop';
 
 export const RecommendationPanel = () => {
     const { suggestions, setSuggestions, callProducts, setKeyword} = useShop();

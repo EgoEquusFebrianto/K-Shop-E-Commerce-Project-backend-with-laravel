@@ -13,19 +13,27 @@ class ProductController extends Controller
 {
     public function __construct(
         private readonly ProductService $productService
-    ) {
-
-    }
+    ) {}
 
     public function index(Request $request): JsonResponse
     {
         // $search = $request->query('search');
         // $perPage = (int) $request->query('per_page', 10);
-        $products = $this->productService->getAll([
-            'search' => $request->query('search'),
-            'category' => $request->query('category'),
-            'sort' => $request->query('sort'),
-        ]);
+
+        $hasfilter = 
+            $request->filled('search') ||
+            $request->filled('category') ||
+            $request->filled('sort');
+            
+        $products = $hasfilter 
+            ? $this->productService->getAll([
+                'search' => $request->query('search'),
+                'category' => $request->query('category'),
+                'sort' => $request->query('sort'),
+            ])
+            :$this->productService->getLatestProducts(
+                (int) $request->query('page', 1)
+            );
 
         return response()->json([
             'message' => 'Product retrieved successfully.',    

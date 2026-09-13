@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from 'react'
 import { useAuth } from '../../context/auth/hooks/auth-hook';
 import './userMenu.css'
 import { Link } from 'react-router-dom';
+import { UserStorage } from '../../utils/auth/access-token-storage';
 
 const DEFAULT_AVATAR = `${import.meta.env.VITE_APP_URL}/storage/profile/default/customer1.jpg`;
 
@@ -36,7 +37,9 @@ export const UserMenu = () => {
     }, [])
     
     const avatarUrl = user?.avatar ?? DEFAULT_AVATAR;
-    // console.log(user);
+    console.log("User Data from context=", user);
+    console.log("User Data from storage=", UserStorage.get());
+    console.log("IsAuthenticated value=", isAuthenticated);
     
     return (
         <div className='user-menu' ref={menuRef}>
@@ -57,10 +60,10 @@ export const UserMenu = () => {
                         <>
                             <div className='user-info'>
                                 <span className='user-name'>
-                                    {user.fullname}
+                                    {user?.fullname}
                                 </span>
                                 <span className='user-email'>
-                                    {user.email}
+                                    {user?.email}
                                 </span>
                             </div>
 

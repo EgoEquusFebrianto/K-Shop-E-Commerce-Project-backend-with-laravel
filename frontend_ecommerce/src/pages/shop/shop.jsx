@@ -1,17 +1,14 @@
 import React from "react";
-import { Product } from "./product";
-import "./shop.css";
-import { useShop } from "../../context/shop/hook/shop-hook";
-import { Pagination } from "../../components/pagination/pagination";
+import { Product } from "./Product";
+import { Pagination } from "../../components/pagination/Pagination";
 import { ProductSearchPannel } from "../../components/producer-search/producer-search";
+import { useShop } from "../../context/shop/hook/useShop";
+
+import "./Shop.css";
 
 export const Shop = () => {
   const { products } = useShop();
   
-  const raw = localStorage.getItem("products");
-  const data = JSON.parse(raw);
-
-  // console.log(data)
   return (
     <div className="shop" id="shop-top">
       <div className="shopTitle">

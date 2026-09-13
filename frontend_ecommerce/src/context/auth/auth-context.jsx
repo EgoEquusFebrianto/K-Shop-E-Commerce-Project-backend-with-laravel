@@ -1,15 +1,12 @@
-import React, { createContext, useCallback, useEffect, useState } from 'react'
+import { createContext, useCallback, useEffect, useState } from 'react'
 import AuthService from './service/auth-service';
-import { TokenStorage } from '../../utils/auth/token-storage';
-import { isTokenExpired } from '../../utils/auth/jwt-util';
+import { AccessTokenStorage } from '../../utils/auth/access-token-storage';
 
 export const AuthContext = createContext(null);
 
-const INACTIVE_TIMEOUT = 15 * 60 * 1000;
-
 export const AuthProvider = ({children}) => {
   const [user, setUser] = useState(null);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   // Login
@@ -34,47 +31,40 @@ export const AuthProvider = ({children}) => {
   }, []);
 
   // Logout
-  const logout = useCallback(() => {
-    AuthService.logout();
-    setUser(null);
-    setIsAuthenticated(false);
+  const logout = useCallback(async () => {
+    try {
+      await AuthService.logout();
+    } finally {
+      setUser(null);
+      setIsAuthenticated(false);
+    }
   }, []);
 
-  // Restore Login
+  // Restore User Data
+  const restore = useCallback(async () => {
+      const response = await AuthService.getMe();
+      const {user} = response;
+
+      if (user !== null) {
+          setUser(user);
+          setIsAuthenticated(true);
+      } else {
+          setUser(null);
+          setIsAuthenticated(false);
+          AccessTokenStorage.clear()
+      }
+
+      setLoading(false);
+  }, []);
+
+  // Initial restore
   useEffect(() => {
     const restoreSession = async () => {
-      const token = TokenStorage.getToken();
-
-      if (!token || isTokenExpired(token)) {
-        AuthService.logout();
-        setLoading(false);
-        return;
-      }
-
-      try {
-        const response = await AuthService.getMe();
-
-        const user = response.data ?? response.message;
-
-        setUser(user);
-        setIsAuthenticated(true);
-
-        // Simpan data user terbaru
-        TokenStorage.save(token, user);
-      } catch (error) {
-        console.error("Failed to restore session:", error);
-
-        AuthService.logout();
-        setUser(null);
-        setIsAuthenticated(false);
-      } finally {
-        setLoading(false);
-      }
+      await restore();
     };
 
     restoreSession();
-  }, []);
-
+  }, [restore]);
 
   const value = {
     user,

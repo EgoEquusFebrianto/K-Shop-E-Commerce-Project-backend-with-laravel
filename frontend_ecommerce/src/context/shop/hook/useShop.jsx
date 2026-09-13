@@ -1,5 +1,5 @@
 import React, { useContext } from 'react'
-import { ShopContext } from '../shop-context';
+import { ShopContext } from '../ShopContext';
 
 export const useShop = () => {
     const context = useContext(ShopContext);

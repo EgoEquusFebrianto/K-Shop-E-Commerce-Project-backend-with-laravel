@@ -5,7 +5,6 @@ import './orders.css'
 
 export const Orders = () => {
     const { orders, deleteOrder } = useOrder();
-    // console.log(orders);
 
     const handleCancelOrder = async (id) => {
         await deleteOrder(id);

@@ -55,15 +55,15 @@ class RefreshTokenService
         );
     }
 
-    public function rotate(string $token, int $userId): array
-    {
-        $this->revoke($token);
-
-        return $this->issue($userId);
-    }
-
     private function getKey(string $hash): string
     {
         return "auth:refresh_token:{$hash}";
     }
+
+    // public function rotate(string $token, int $userId): array
+    // {
+    //     $this->revoke($token);
+
+    //     return $this->issue($userId);
+    // }
 }

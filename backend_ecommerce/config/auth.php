@@ -133,6 +133,7 @@ return [
     'refresh_token' => [
         'ttl_days' => 7,
         'cookie_name' => 'refresh_token',
+        'cookie_path' => '/api/auth',
 
         /*
         |--------------------------------------------------------------------------

@@ -1,7 +1,7 @@
 import "./App.css";
 import { BrowserRouter as Router, Routes, Route, useLocation, BrowserRouter } from "react-router-dom";
 import { Navbar } from "./components/navbar/navbar";
-import { Shop } from "./pages/shop/shop";
+import { Shop } from "./pages/shop/Shop";
 import { Contact } from "./pages/contact";
 import { Cart } from "./pages/cart/cart";
 import { LoginPage } from "./pages/login/LoginPage";

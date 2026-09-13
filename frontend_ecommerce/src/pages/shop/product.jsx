@@ -1,6 +1,5 @@
 import React from "react";
 import { useCart } from "../../context/cart-shop/hook/cart-hook";
-import { TokenStorage } from "../../utils/auth/token-storage";
 import { useAuth } from "../../context/auth/hooks/auth-hook";
 import { showLoginRequiredToast } from "../../utils/toast-helper";
 

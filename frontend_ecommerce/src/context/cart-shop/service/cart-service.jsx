@@ -1,5 +1,4 @@
-import React from 'react'
-import API from '../../api/api'
+import API from '../../api/API'
 
 const CartService = {
 
@@ -18,11 +17,11 @@ const CartService = {
     },
 
     update: async (cartId, quantity) => {
-        const response = API.patch(`/cart/${cartId}`, {
+        const response = await API.patch(`/cart/${cartId}`, {
             quantity,
         })
 
-        return await response.data.data;
+        return response.data.data;
     },
 
     delete: async (cartId) => {

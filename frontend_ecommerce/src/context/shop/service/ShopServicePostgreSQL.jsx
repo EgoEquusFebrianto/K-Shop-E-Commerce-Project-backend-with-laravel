@@ -1,7 +1,6 @@
-import React from 'react'
-import API from '../../api/api'
+import API from '../../api/API';
 
-export const ShopService = {
+export const ShopServicePostgreSQL = {
   getAll: async (page, keyword, categoryId) => {
     const params = new URLSearchParams();
 

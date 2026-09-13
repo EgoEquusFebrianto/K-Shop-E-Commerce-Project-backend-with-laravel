@@ -1,7 +1,7 @@
 import React from 'react'
 import { FiSearch } from 'react-icons/fi'
 import "./search-button.css";
-import { useShop } from '../../../context/shop/hook/shop-hook';
+import { useShop } from '../../../context/shop/hook/useShop';
 
 export const SearchButton = () => {
   const { callProducts } = useShop();

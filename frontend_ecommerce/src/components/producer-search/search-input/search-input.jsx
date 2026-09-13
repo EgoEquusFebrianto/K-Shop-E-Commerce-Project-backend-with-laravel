@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from 'react'
 import "./search-input.css";
-import { useShop } from '../../../context/shop/hook/shop-hook';
+import { useShop } from '../../../context/shop/hook/useShop';
 import { RecommendationPanel } from '../recommendation/recommendation';
 
 export const SearchInput = () => {

@@ -1,7 +1,5 @@
 const MAX_VISIBLE_PAGE = 5;
 
-import React from 'react'
-
 export const getVisiblePage = (currentPage, totalPages) => {
     const visibleCount = Math.min(MAX_VISIBLE_PAGE, totalPages);
     let startPage = 1;
